@@ -1,4 +1,5 @@
 <?php
+require_once 'Contact.php';
 
 class ContactManager {
     private PDO $pdo;
@@ -7,8 +8,24 @@ class ContactManager {
     $this->pdo = $pdo;
     }
 
-    public function findAll(): array{
+    public function findAll(): array
+    {
         $statement = $this->pdo->query('SELECT * FROM contact');
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        $contacts = [];
+        $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach ($rows as $row) {
+            $contact = new Contact();
+
+            $contact->setId((int) $row['id']);
+            $contact->setName($row['name']);
+            $contact->setEmail($row['email']);
+            $contact->setPhoneNumber($row['phone_number']);
+
+            $contacts[] = $contact;
+        }
+
+        return $contacts;
     }
 }

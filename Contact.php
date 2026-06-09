@@ -39,9 +39,6 @@ class Contact {
     }
 
     public function toString(): string{
-        return  "Contact{id={$this->id}, " . 
-                "name={$this->name}, " . 
-                "email={$this->email}, " . 
-                "phoneNumber={$this->phoneNumber}}";
+        return "[$this->id] $this->name - $this->email - $this->phoneNumber";
     }
 }
