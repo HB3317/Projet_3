@@ -49,4 +49,10 @@ class ContactManager {
 
     return null;
     }
+
+     public function create(string $name, string $email, string $phoneNumber): void 
+    {
+        $statement = $this->pdo->prepare('INSERT INTO contact (name, email, phone_number) VALUES (?, ?, ?)');
+        $statement->execute([$name, $email, $phoneNumber]);
+    }
 }
