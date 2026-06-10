@@ -5,14 +5,14 @@ $pdo = $dbConnect->getPDO();
 
 require_once "ContactManager.php";
 $contactManager = new ContactManager($pdo);
+
+require_once "Command.php";
+$command = new Command($contactManager);
+
 while (true) {
     $line = readline("Entrez votre commande : ");
     echo "Vous avez saisi : $line\n";
     if ($line === "list") {
-        echo "affichage de la liste:\n";
-        $contacts = $contactManager->findAll();
-        foreach ($contacts as $contact) {
-        echo $contact->toString() . PHP_EOL;
-        }
+        $command->list();
     }
 }
