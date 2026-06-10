@@ -14,7 +14,7 @@ class ContactManager {
 
         $contacts = [];
         $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
-        
+
         foreach ($rows as $row) {
             $contact = new Contact();
 
@@ -27,5 +27,26 @@ class ContactManager {
         }
 
         return $contacts;
+    }
+
+    public function findById(int $id): ?Contact
+    {
+        $statement = $this->pdo->prepare('SELECT * FROM contact WHERE id = ?');
+        $statement->execute([$id]);
+
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            $contact = new Contact();
+
+            $contact->setId((int) $row['id']);
+            $contact->setName($row['name']);
+            $contact->setEmail($row['email']);
+            $contact->setPhoneNumber($row['phone_number']);
+        
+            return $contact;
+        }
+
+    return null;
     }
 }

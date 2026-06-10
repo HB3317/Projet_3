@@ -19,4 +19,15 @@ class Command
             echo $contact->toString() . PHP_EOL;
         }
     }
+
+    public function detail(int $id): void 
+    {
+        $contact = $this->contactManager->findById($id);
+
+        if ($contact) {
+            echo $contact->toString() . PHP_EOL;
+        } else {
+            echo "Contact avec l'ID $id non trouvé." . PHP_EOL;
+        }
+    }
 }
