@@ -61,4 +61,10 @@ class ContactManager {
         $statement = $this->pdo->prepare('DELETE FROM contact WHERE id = ?');
         $statement->execute([$id]);
     }
+    
+    public function modify(int $id, string $name, string $email, string $phoneNumber): void 
+    {
+        $statement = $this->pdo->prepare('UPDATE contact SET name = ?, email = ?, phone_number = ? WHERE id = ?');
+        $statement->execute([$name, $email, $phoneNumber, $id]);
+    }
 }
