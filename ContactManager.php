@@ -47,12 +47,18 @@ class ContactManager {
             return $contact;
         }
 
-    return null;
+        return null;
     }
 
      public function create(string $name, string $email, string $phoneNumber): void 
     {
         $statement = $this->pdo->prepare('INSERT INTO contact (name, email, phone_number) VALUES (?, ?, ?)');
         $statement->execute([$name, $email, $phoneNumber]);
+    }
+
+    public function delete(int $id): void 
+    {
+        $statement = $this->pdo->prepare('DELETE FROM contact WHERE id = ?');
+        $statement->execute([$id]);
     }
 }

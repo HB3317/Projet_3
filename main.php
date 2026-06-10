@@ -47,6 +47,19 @@ while (true) {
 
         $command->create($name, $email, $phoneNumber);
     }
+
+    elseif ($line === "delete") {
+        echo "Liste des utilisateurs :" . PHP_EOL;
+        $command->list();  
+        $idToDelete = trim(readline("Entrez l'ID du contact à supprimer : "));
+        
+        if (!is_numeric($idToDelete)) {
+            echo "L'ID doit être un nombre." . PHP_EOL;
+            continue;
+        }
+
+        $command->delete((int) $idToDelete);
+    }
     
     else {
         echo "Commande inconnue" . PHP_EOL;
