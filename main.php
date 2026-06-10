@@ -10,7 +10,7 @@ require_once "Command.php";
 $command = new Command($contactManager);
 
 while (true) {
-    $line = readline("Entrez votre commande [list|detail|create|delete|modify|help]: ");
+    $line = readline("Entrez votre commande [list|detail|create|delete|modify|help|exit]: ");
     echo "Vous avez saisi : $line\n";
 
     if ($line === "list") {
@@ -92,6 +92,14 @@ while (true) {
             continue;
         }
         $command->modify((int) $idToModify, $name, $email, $phoneNumber);
+    }
+
+    elseif ($line === "help") {
+        $command->help();
+    }
+
+    elseif ($line === "exit") {
+        $command->exit();
     }
     
     else {

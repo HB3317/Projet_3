@@ -60,4 +60,21 @@ class Command
             echo "Contact avec l'ID $id non trouvé." . PHP_EOL;
         }
     }
+
+    public function help(): void 
+    {
+        echo "Commandes disponibles :" . PHP_EOL;
+        echo "list - Affiche la liste de tous les contacts." . PHP_EOL;
+        echo "detail [id] - Affiche les détails du contact avec l'ID spécifié." . PHP_EOL;
+        echo "create - Crée un nouveau contact en demandant les informations à l'utilisateur." . PHP_EOL;
+        echo "delete - Supprime le contact avec l'ID spécifié." . PHP_EOL;
+        echo "modify - Modifie le contact avec l'ID spécifié en demandant les nouvelles informations à l'utilisateur." . PHP_EOL;
+        echo "help - Affiche cette aide." . PHP_EOL;
+    }
+
+    public function exit(): void 
+    {
+        echo "Au revoir!" . PHP_EOL;
+        exit(0);
+    }
 }
