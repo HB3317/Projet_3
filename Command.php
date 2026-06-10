@@ -70,6 +70,7 @@ class Command
         echo "delete - Supprime le contact avec l'ID spécifié." . PHP_EOL;
         echo "modify - Modifie le contact avec l'ID spécifié en demandant les nouvelles informations à l'utilisateur." . PHP_EOL;
         echo "help - Affiche cette aide." . PHP_EOL;
+        echo "exit - Quitte l'application." . PHP_EOL;
     }
 
     public function exit(): void 
