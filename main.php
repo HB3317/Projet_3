@@ -13,7 +13,7 @@ class Main
         $this->run();
     }
 
-    public function init() : void
+    private function init() : void
     {
         $dbConnect = new DBConnect();
         $pdo = $dbConnect->getPDO();
@@ -21,7 +21,7 @@ class Main
         $this->command = new Command($contactManager);
     }
     
-    public function run() : void 
+    private function run() : void 
     {
         while (true) {
             $line = readline("Entrez votre commande [list|detail|create|delete|modify|help|exit]: ");
@@ -62,33 +62,45 @@ class Main
         }
     }
 
-    public function create() : void
+    private function getNewUserInput() : ?array
     {
         $name = trim(readline("Entrez le nom : "));
         if ($name === "") {
             echo "Le nom ne peut pas être vide." . PHP_EOL;
-            return;
+            return null;
         }
 
         $email = trim(readline("Entrez l'email : "));
         if ($email === "") {
             echo "L'email ne peut pas être vide." . PHP_EOL;
-            return;
+            return null;
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             echo "L'email n'est pas valide." . PHP_EOL;
-            return;
+            return null;
         }
 
         $phoneNumber = trim(readline("Entrez le numéro de téléphone : "));
         if ($phoneNumber === "") {
             echo "Le numéro de téléphone ne peut pas être vide." . PHP_EOL;
-            return;
+            return null;
         }
-
-        $this->command->create($name, $email, $phoneNumber);
+        $newUserInput = [
+            'name' => $name,
+            'email' => $email,
+            'phone_number' => $phoneNumber
+        ];
+        return $newUserInput;
     }
-    public function delete() : void
+    private function create() : void
+    {
+        $newUserInput = $this->getNewUserInput();
+        if (!empty($newUserInput)) {
+            $this->command->create($newUserInput['name'], $newUserInput['email'], $newUserInput['phone_number']);
+        }
+    }
+
+    private function delete() : void
     {
         echo "Liste des utilisateurs :" . PHP_EOL;
         $this->command->list();  
@@ -101,7 +113,7 @@ class Main
 
         $this->command->delete((int) $idToDelete);
     }
-    public function modify() : void
+    private function modify() : void
     {
         echo "Liste des utilisateurs :" . PHP_EOL;
         $this->command->list();
@@ -111,28 +123,10 @@ class Main
             echo "L'ID doit être un nombre." . PHP_EOL;
             return;
         }
-        $name = trim(readline("Entrez le nouveau nom : "));
-        if ($name === "") {
-            echo "Le nom ne peut pas être vide." . PHP_EOL;
-            return;
+        $newUserInput = $this->getNewUserInput();
+        if (!empty($newUserInput)) {
+            $this->command->modify((int) $idToModify, $newUserInput['name'], $newUserInput['email'], $newUserInput['phone_number']);
         }
-
-        $email = trim(readline("Entrez le nouvel email : "));
-        if ($email === "") {
-            echo "L'email ne peut pas être vide." . PHP_EOL;
-            return;
-        }
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            echo "L'email n'est pas valide." . PHP_EOL;
-            return;
-        }
-
-        $phoneNumber = trim(readline("Entrez le nouveau numéro de téléphone : "));
-        if ($phoneNumber === "") {
-            echo "Le numéro de téléphone ne peut pas être vide." . PHP_EOL;
-            return;
-        }
-        $this->command->modify((int) $idToModify, $name, $email, $phoneNumber);
     }
 
 }
