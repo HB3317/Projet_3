@@ -62,14 +62,18 @@ class Main
         }
     }
 
-    private function getNewUserInput() : ?array
+    private function getNewName() : ?string
     {
         $name = trim(readline("Entrez le nom : "));
         if ($name === "") {
             echo "Le nom ne peut pas être vide." . PHP_EOL;
             return null;
         }
+        return $name;
+    }
 
+    private function getNewEmail() : ?string
+    {
         $email = trim(readline("Entrez l'email : "));
         if ($email === "") {
             echo "L'email ne peut pas être vide." . PHP_EOL;
@@ -79,10 +83,26 @@ class Main
             echo "L'email n'est pas valide." . PHP_EOL;
             return null;
         }
+        return $email;
+    }
 
+    private function getNewPhoneNumber() : ?string
+    {
         $phoneNumber = trim(readline("Entrez le numéro de téléphone : "));
         if ($phoneNumber === "") {
             echo "Le numéro de téléphone ne peut pas être vide." . PHP_EOL;
+            return null;
+        }
+        return $phoneNumber;
+    }
+
+    private function getNewUserInput() : ?array
+    {
+        $name = $this->getNewName();
+        $email = $this->getNewEmail();
+        $phoneNumber = $this->getNewPhoneNumber();
+        if ($name === null || $email === null || $phoneNumber === null) {
+            echo "Erreur : les informations saisies sont invalides." . PHP_EOL;
             return null;
         }
         $newUserInput = [
